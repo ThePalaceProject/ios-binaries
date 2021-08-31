@@ -1,1 +1,11 @@
+name: Test run
 
+on:
+  schedule:
+    - cron:  '00 22 * * 1-5'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
