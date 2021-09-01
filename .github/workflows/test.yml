@@ -11,6 +11,5 @@ jobs:
       
       - name: Upload to browserstack and trigger tests
         run:
-         context = ls $GITHUB_WORKSPACE/
+         ls $GITHUB_WORKSPACE/
          echo "hello"
-         echo context
