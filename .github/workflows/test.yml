@@ -10,6 +10,6 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Upload to browserstack and trigger tests
-        run:
-         file = ${$GITHUB_WORKSPACE/Palace-1.0.3.14.zip}
-         echo $file
+         touch new.json
+         ls
+        
