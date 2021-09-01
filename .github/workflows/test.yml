@@ -11,5 +11,5 @@ jobs:
       
       - name: Upload to browserstack and trigger tests
         run:
-         ls $GITHUB_WORKSPACE/
-         echo "hello"
+         file = ${$GITHUB_WORKSPACE/Palace-1.0.3.14.zip}
+         echo $file
