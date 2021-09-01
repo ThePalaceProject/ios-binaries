@@ -8,3 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Upload to browserstack and trigger tests
+        run:
+         echo "hello"
+         echo $GITHUB_WORKSPACE
