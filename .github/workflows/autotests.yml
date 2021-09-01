@@ -1,9 +1,8 @@
 name: Start test run
 
 on:
-  schedule:
-    - cron:  '00 22 * * 1-5'
-
+  push:
+    branches: [ master ]
 jobs:
   build:
     runs-on: ubuntu-latest
