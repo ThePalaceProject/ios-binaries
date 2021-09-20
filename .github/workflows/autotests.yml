@@ -1,7 +1,8 @@
 name: Start test run
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron:  '00 21 * * 1-5'
   
 jobs:
   build:
