@@ -28,5 +28,5 @@ jobs:
          echo APP_ID: $APP_ID
          device_name_and_version="iPhoneXS_12";
          echo "Triggering autotests"
-         curl -X POST -H "Accept:application/vnd.github.v3+json" https://api.github.com/repos/ThePalaceProject/mobile-integration-tests/actions/workflows/maven.yml/dispatches -d '{"ref":"main", "inputs":{"test_tag":"(@tier1 or @tier2 or @tier3)","build_name":"'"$BUILD_NAME"'","device_name_and_version":"'"${device_name_and_version}"'","bs_app_link":"'"$APP_ID"'","platform_name":"ios"}}' -H "Authorization: token ${{secrets.PERSONAL_TOKEN}}" 
+         curl -X POST -H "Accept:application/vnd.github.v3+json" https://api.github.com/repos/ThePalaceProject/mobile-integration-tests/actions/workflows/maven.yml/dispatches -d '{"ref":"main", "inputs":{"test_tag":"(@tier1 or @tier2 or @tier3)","build_name":"'"$BUILD_NAME"'","device_name_and_version":"iPhoneXS_12","bs_app_link":"'"$APP_ID"'","platform_name":"ios"}}' -H "Authorization: token ${{secrets.PERSONAL_TOKEN}}" 
       
