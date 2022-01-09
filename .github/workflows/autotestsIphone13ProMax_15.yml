@@ -1,4 +1,4 @@
-name: Start test run on iPhoneXS_14
+name: Start test run on iPhone13ProMax_15
 
 on:
   schedule:
