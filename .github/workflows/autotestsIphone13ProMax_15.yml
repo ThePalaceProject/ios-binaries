@@ -2,7 +2,7 @@ name: Start test run on iPhone13ProMax_15
 
 on:
   schedule:
-    - cron:  '00 3 * * 1-5'
+    - cron:  '00 11 * * 1-5'
   
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
          echo URL: $URL
          RESPONSE=$(curl -H "Accept: application/vnd.github.v3+json" $URL)
          readarray -t build_name <<<"$(jq '.files[].filename'<<<$RESPONSE)"
-         ZIP_NAME=${build_name:1:20}
+         ZIP_NAME=${build_name:1:25}
          unzip $ZIP_NAME
          fileName=*.ipa
          echo file: $fileName
