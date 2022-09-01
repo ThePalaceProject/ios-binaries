@@ -18,7 +18,7 @@ jobs:
          echo URL: $URL
          RESPONSE=$(curl -H "Accept: application/vnd.github.v3+json" $URL)
          readarray -t build_name <<<"$(jq '.files[].filename'<<<$RESPONSE)"
-         ZIP_NAME=${build_name:1:20}
+         ZIP_NAME=${build_name:1:21}
          unzip $ZIP_NAME
          fileName=*.ipa
          echo file: $fileName
