@@ -2,7 +2,7 @@ name: Start test run on iPadPro2021_14
 
 on:
   schedule:
-    - cron:  '0 4 * * 0'
+    - cron:  '0 4 * * 3'
   
 jobs:
   build:
