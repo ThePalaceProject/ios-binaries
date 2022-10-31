@@ -2,7 +2,7 @@ name: Start test run on iPhone13ProMax_15
 
 on:
   schedule:
-    - cron:  '30 9 * * 5'
+    - cron:  '00 17 * * 2,4'
   
 jobs:
   build:
