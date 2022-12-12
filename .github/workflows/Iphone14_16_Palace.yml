@@ -1,8 +1,8 @@
-name: Start test run on iPhone14_16
+name: Start test run on iPhone14_16 in Palace
 
 on:
   schedule:
-    - cron:  '00 14 * * 1'
+    - cron:  '10 14 * * 1'
   
 jobs:
   build:
