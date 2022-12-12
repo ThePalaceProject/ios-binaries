@@ -2,7 +2,7 @@ name: Start test run on iPhone14_16 in Palace
 
 on:
   schedule:
-    - cron:  '10 14 * * 1'
+    - cron:  '10 14 * * 3'
   
 jobs:
   build:
