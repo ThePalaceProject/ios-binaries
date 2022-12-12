@@ -2,11 +2,11 @@ name: Start test run on iPhone14_16 in Palace
 
 on:
   schedule:
-    - cron:  '10 15 * * 1'
+    - cron:  '00 16 * * 1'
   
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       
