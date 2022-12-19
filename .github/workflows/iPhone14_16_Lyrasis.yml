@@ -1,8 +1,8 @@
-name: Start test run on iPhone14_16
+name: Tests on iPhone14_16 in LYRASIS
 
 on:
   schedule:
-    - cron:  '00 22 * * 2'
+    - cron:  '00 18 * * 1'
   
 jobs:
   build:
