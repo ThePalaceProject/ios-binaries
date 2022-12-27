@@ -2,7 +2,7 @@ name: Tests on iPhone14_16 in LYRASIS
 
 on:
   schedule:
-    - cron:  '30 19 * * 1'
+    - cron:  '30 19 * 6 1'
   
 jobs:
   build:
