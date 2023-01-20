@@ -2,7 +2,7 @@ name: Tests on iPadPro2021_14 in Palace
 
 on:
   schedule:
-    - cron:  '30 15 * * 6'
+    - cron:  '30 13 * * 6'
   
 jobs:
   build:
