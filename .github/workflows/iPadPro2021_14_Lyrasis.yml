@@ -2,7 +2,7 @@ name: Tests on iPadPro2021_14 in Lyrasis
 
 on:
   schedule:
-    - cron:  '0 5 * * 2'
+    - cron:  '0 7 * * 6'
   
 jobs:
   build:
