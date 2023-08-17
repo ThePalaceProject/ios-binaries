@@ -2,7 +2,7 @@ name: Tests on iPhone14ProMax_16 in Palace
 
 on:
   schedule:
-    - cron:  '50 10 * * 4'
+    - cron:  '25 12 * * 4'
   
 jobs:
   build:
