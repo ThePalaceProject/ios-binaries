@@ -1,6 +1,8 @@
 name: Test on iPhone13ProMax_15 in Palace
 
 on:
+  push:
+    branches: [ "main" ]
   schedule:
     - cron:  '20 13 * * 5'
   
