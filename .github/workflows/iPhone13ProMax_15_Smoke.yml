@@ -3,9 +3,6 @@ name: Smoke tests on iPhone13ProMax_15
 on:
   schedule:
     - cron:  '0 10 * * 0'
-  push:
-    branches:
-      - main
   
 jobs:
   build:
