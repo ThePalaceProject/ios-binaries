@@ -3,7 +3,8 @@ name: Smoke tests on iPhone15ProMax_17
 on:
   push:
     branches:
-      - master
+      - main
+  
   
 jobs:
   build:
