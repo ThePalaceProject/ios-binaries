@@ -1,4 +1,4 @@
-name: Smoke tests on iPhone15ProMax_17
+name: Tests on iPhone15ProMax_17
 
 on:
   push:
