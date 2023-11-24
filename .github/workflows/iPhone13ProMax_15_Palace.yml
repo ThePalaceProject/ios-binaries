@@ -1,8 +1,8 @@
-name: Test on iPhone13ProMax_15 in Palace
+name: iPhone 13 Pro Max 15 Palace
 
 on:
   schedule:
-    - cron:  '0 12 * * 0'
+    - cron:  '30 20 * * 1'
   
 jobs:
   build:
