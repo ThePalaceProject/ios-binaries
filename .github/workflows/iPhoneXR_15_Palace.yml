@@ -1,8 +1,8 @@
-name: Tests on iPhoneXR_15 in Palace
+name: iPhone XR 15 Palace
 
 on:
  schedule:
-    - cron:  '0 15 2,18 * *'
+    - cron:  '30 20 * 9 4'
   
 jobs:
   build:
