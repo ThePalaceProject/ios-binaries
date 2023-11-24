@@ -2,7 +2,7 @@ name: iPhone 15 Pro Max 17 LYRASIS
 
 on:
   schedule:
-    - cron:  '30 3 * * 4'
+    - cron:  '30 3 * * 1,4'
   
 jobs:
   build:
