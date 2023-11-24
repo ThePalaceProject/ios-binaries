@@ -1,8 +1,8 @@
-name: Tests on iPhoneXR_15 in Lyrasis
+name: iPhone XR 15 Lyrasis
 
 on:
  schedule:
-    - cron:  '0 15 1,17 * *'
+    - cron:  '30 3 * 9 5'
   
 jobs:
   build:
