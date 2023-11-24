@@ -1,8 +1,8 @@
-name: Test on iPhone13ProMax_15 in LYRASIS
+name: iPhone 13 Pro Max 15 LYRASIS
 
 on:
   schedule:
-    - cron:  '0 4 * * 0'
+    - cron:  '30 3 * * 2'
   
 jobs:
   build:
