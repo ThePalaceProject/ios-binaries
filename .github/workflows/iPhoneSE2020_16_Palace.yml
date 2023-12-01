@@ -2,7 +2,7 @@ name: iPhoneSE2020_16 Palace
 
 on:
  schedule:
-    - cron:  '30 22 * * 6'
+    - cron:  '30 22 * 9 6'
   
 jobs:
   build:
