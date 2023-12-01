@@ -1,8 +1,8 @@
-name: iPhoneSE2020_16 Lyrasis
+name: iPhone SE 2020 16 Lyrasis
 
 on:
  schedule:
-    - cron:  '30 22 * 9 6'
+    - cron:  '30 22 * * 6'
   
 jobs:
   build:
