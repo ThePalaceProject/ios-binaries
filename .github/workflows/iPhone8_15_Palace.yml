@@ -1,7 +1,7 @@
 name: iPhone 8 15 Palace
 on:
   schedule:
-    - cron:  '30 15 * 1 0'
+    - cron:  '30 15 * * 6'
   
 jobs:
   build:
@@ -28,4 +28,4 @@ jobs:
          APP_ID=$(echo $APP_UPLOAD_RESPONSE | jq -r ".app_url")
          echo APP_ID: $APP_ID
          echo "Triggering autotests"
-         curl -X POST -H "Accept:application/vnd.github.v3+json" https://api.github.com/repos/ThePalaceProject/mobile-integration-tests/actions/workflows/maven.yml/dispatches -d '{"ref":"main", "inputs":{"test_tag":"@tier2","build_name":"'"$BUILD_NAME"'","device_name_and_version":"iPhone8_15","bs_app_link":"'"$APP_ID"'","platform_name":"ios"}}' -H "Authorization: token ${{secrets.PERSONAL_TOKEN}}"
+         curl -X POST -H "Accept:application/vnd.github.v3+json" https://api.github.com/repos/ThePalaceProject/mobile-integration-tests-new/actions/workflows/maven.yml/dispatches -d '{"ref":"main", "inputs":{"test_tag":"@tier2","build_name":"'"$BUILD_NAME"'","device_name_and_version":"iPhone8_15","bs_app_link":"'"$APP_ID"'","platform_name":"ios"}}' -H "Authorization: token ${{secrets.PERSONAL_TOKEN}}"
