@@ -2,7 +2,7 @@ name: Aquality tracking
 
 on:
   schedule:
-    - cron:  '05 9 * * 1'
+    - cron:  '10 10 * * 1'
   
 jobs:
   build:
