@@ -2,7 +2,7 @@ name: iPhone 8 15 LYRASIS
 
 on:
   schedule:
-    - cron:  '30 8 * * 6'
+    - cron:  '30 8 * 9 6'
   
 jobs:
   build:
