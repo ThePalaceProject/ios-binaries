@@ -1,7 +1,7 @@
 name: iPhone 8 15 Palace
 on:
   schedule:
-    - cron:  '30 15 * 9 6'
+    - cron:  '30 15 * * 6'
   
 jobs:
   build:
