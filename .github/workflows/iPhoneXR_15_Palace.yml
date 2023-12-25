@@ -2,7 +2,7 @@ name: iPhone XR 15 Palace
 
 on:
  schedule:
-    - cron:  '30 20 * * 4'
+    - cron:  '30 20 * 9 4'
   
 jobs:
   build:
