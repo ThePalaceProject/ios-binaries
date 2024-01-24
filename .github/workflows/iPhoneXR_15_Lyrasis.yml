@@ -2,7 +2,7 @@ name: iPhone XR 15 Lyrasis
 
 on:
  schedule:
-    - cron:  '30 3 * * 5'
+    - cron:  '30 3 * 9 5'
   
 jobs:
   build:
