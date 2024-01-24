@@ -3,7 +3,7 @@ name: Smoke tests on iPhone 14 Pro Max 16
 on:
   push:
     branches:
-      - master
+      - mast
   
 jobs:
   build:
