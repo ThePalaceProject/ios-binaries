@@ -9,13 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Clean up disk space
+      - name: Clean Git repository
         run: |
-          rm -rf /path/to/large/files
+          git gc --prune=all
 
-      - name: Remove Git lock files
-        run: |
-          rm -f /home/runner/work/ios-binaries/ios-binaries/.git/index.lock
           
       - uses: actions/checkout@v4
     
