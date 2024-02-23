@@ -11,10 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Clear temporary files
-        run: |
-          rm -rf /home/runner/runners/2.313.0/_diag/*
-      
       - name: Upload to browserstack and trigger tests
         run: |
          COMMITS=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/ThePalaceProject/ios-binaries/commits)
