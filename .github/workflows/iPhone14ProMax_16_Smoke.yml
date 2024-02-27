@@ -9,11 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Clean Git repository
-        run: |
-          git gc --prune=all
-
-          
+              
       - uses: actions/checkout@v4
     
       - name: Upload to browserstack and trigger tests
