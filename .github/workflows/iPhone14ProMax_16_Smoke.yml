@@ -16,26 +16,35 @@ jobs:
     
       - name: Upload to browserstack and trigger tests
         run: |
-         $COMMITS = Invoke-RestMethod -Uri https://api.github.com/repos/ThePalaceProject/ios-binaries/commits -Headers @{Accept = "application/vnd.github.v3+json"}
-         $URLS = ($COMMITS | Where-Object { $_.commit.author.name -eq "runner" }).url
-         $URL = $URLS.Substring(0, 107)
-         Write-Host "URL: $URL"
-         
-         $RESPONSE = Invoke-RestMethod -Uri $URL -Headers @{Accept = "application/vnd.github.v3+json"}
-         $build_name = $RESPONSE.files.filename
-         $ZIP_NAME = $build_name.Substring(1, 21)
-         
-         Expand-Archive -Path $ZIP_NAME -DestinationPath .
-         $fileName = Get-ChildItem -Filter *.ipa
-         Write-Host "file: $fileName"
-         
-         $BUILD_NAME = $fileName.Name
-         Write-Host "buildName: $BUILD_NAME"
-         
-         $fileName_abs_path = (Get-Item $fileName.FullName).FullName
-         $APP_UPLOAD_RESPONSE = Invoke-RestMethod -Uri "https://api-cloud.browserstack.com/app-automate/upload" -Method Post -Credential (Get-Credential) -Form @{file = $fileName_abs_path}
-         $APP_ID = $APP_UPLOAD_RESPONSE.app_url
-         Write-Host "APP_ID: $APP_ID"
-         
-         Write-Host "Triggering autotests"
-         Invoke-RestMethod -Uri "https://api.github.com/repos/ThePalaceProject/mobile-integration-tests-new/actions/workflows/maven.yml/dispatches" -Method Post -Headers @{Accept = "application/vnd.github.v3+json"; Authorization = "token ***"} -Body '{"ref":"main", "inputs":{"test_tag":"@smoke","build_name":"'"$BUILD_NAME"'","device_name_and_version":"iPhone14ProMax_16","bs_app_link":"'"$APP_ID"'","platform_name":"ios"}}'
+          $COMMITS = Invoke-RestMethod -Uri https://api.github.com/repos/ThePalaceProject/ios-binaries/commits -Headers @{Accept = "application/vnd.github.v3+json"}
+          $URLS = ($COMMITS | Where-Object { $_.commit.author.name -eq "runner" })[0].url
+          $URL = $URLS.Substring(0, 107)
+          Write-Host "URL: $URL"
+
+          $RESPONSE = Invoke-RestMethod -Uri $URL -Headers @{Accept = "application/vnd.github.v3+json"}
+          $build_names = $RESPONSE.files | ForEach-Object { $_.filename }
+          $ZIP_NAME = $build_names[1..21] -join ''
+
+          Expand-Archive -Path $ZIP_NAME -DestinationPath .
+          $fileName = Get-ChildItem -Filter *.ipa
+          Write-Host "file: $fileName"
+
+          $BUILD_NAME = $fileName.Name
+          Write-Host "buildName: $BUILD_NAME"
+
+          $fileName_abs_path = (Get-Item $fileName.FullName).FullName
+          $APP_UPLOAD_RESPONSE = Invoke-RestMethod -Uri "https://api-cloud.browserstack.com/app-automate/upload" -Method Post -Credential (Get-Credential) -Form @{file = $fileName_abs_path}
+          $APP_ID = $APP_UPLOAD_RESPONSE.app_url
+          Write-Host "APP_ID: $APP_ID"
+
+          Write-Host "Triggering autotests"
+          Invoke-RestMethod -Uri "https://api.github.com/repos/ThePalaceProject/mobile-integration-tests-new/actions/workflows/maven.yml/dispatches" -Method Post -Headers @{Accept = "application/vnd.github.v3+json"; Authorization = "token ***"} -Body @{
+            ref = "main"
+            inputs = @{
+              test_tag = "@smoke"
+              build_name = $BUILD_NAME
+              device_name_and_version = "iPhone14ProMax_16"
+              bs_app_link = $APP_ID
+              platform_name = "ios"
+            }
+          }  
