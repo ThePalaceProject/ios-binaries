@@ -32,13 +32,20 @@ jobs:
           $BUILD_NAME = $fileName.Name
           Write-Host "buildName: $BUILD_NAME"
 
-          $fileName_abs_path = (Get-Item $fileName.FullName).FullName
-          $APP_UPLOAD_RESPONSE = Invoke-RestMethod -Uri "https://api-cloud.browserstack.com/app-automate/upload" -Method Post -Credential (Get-Credential) -Form @{file = $fileName_abs_path}
+          $browserstackUsername = $env:{{ secrets.BROWSERSTACK_USERNAME }}
+          $browserstackAccessKey = $env:{{ secrets.BROWSERSTACK_ACCESSKEY }}
+
+          $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("${browserstackUsername}:${browserstackAccessKey}"))
+
+          $githubToken = $env:{{ secrets.PERSONAL_TOKEN }}
+          
+          $APP_UPLOAD_RESPONSE = Invoke-RestMethod -Uri "https://api-cloud.browserstack.com/app-automate/upload" -Method Post -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -Form @{file = $fileName_abs_path}
+
           $APP_ID = $APP_UPLOAD_RESPONSE.app_url
           Write-Host "APP_ID: $APP_ID"
-
+          
           Write-Host "Triggering autotests"
-          Invoke-RestMethod -Uri "https://api.github.com/repos/ThePalaceProject/mobile-integration-tests-new/actions/workflows/maven.yml/dispatches" -Method Post -Headers @{Accept = "application/vnd.github.v3+json"; Authorization = "token ***"} -Body @{
+          Invoke-RestMethod -Uri "https://api.github.com/repos/ThePalaceProject/mobile-integration-tests-new/actions/workflows/maven.yml/dispatches" -Method Post -Headers @{Accept = "application/vnd.github.v3+json"; Authorization = "token $githubToken"} -Body @{
             ref = "main"
             inputs = @{
               test_tag = "@smoke"
