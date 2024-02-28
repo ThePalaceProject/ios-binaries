@@ -23,7 +23,7 @@ jobs:
 
           $RESPONSE = Invoke-RestMethod -Uri $URL -Headers @{Accept = "application/vnd.github.v3+json"}
           $build_names = $RESPONSE.files | ForEach-Object { $_.filename }
-          $ZIP_NAME = $build_names[1..21] -join ''
+          $ZIP_NAME = $build_names -join ''
 
           Expand-Archive -Path $ZIP_NAME -DestinationPath .
           $fileName = Get-ChildItem -Filter *.ipa
