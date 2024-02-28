@@ -9,12 +9,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-              
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+      # Архивируем содержимое последнего коммита
+      - name: Archive repository
+        run: git archive --format=tar.gz -o latest_commit.tar.gz HEAD
 
-    
+      # Извлекаем архив
+      - name: Extract archive
+        run: tar -zxvf latest_commit.tar.gz
+
+      # Отображаем текущее использование дискового пространства
       - name: Debug Disk Space
         run: |
           df -h
