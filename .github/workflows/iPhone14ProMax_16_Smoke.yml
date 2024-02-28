@@ -32,13 +32,12 @@ jobs:
           $BUILD_NAME = $fileName.Name
           Write-Host "buildName: $BUILD_NAME"
 
-          $browserstackUsername = $env:{{ secrets.BROWSERSTACK_USERNAME }}
-          $browserstackAccessKey = $env:{{ secrets.BROWSERSTACK_ACCESSKEY }}
-
+          $browserstackUsername = $env:BROWSERSTACK_USERNAME
+          $browserstackAccessKey = $env:BROWSERSTACK_ACCESSKEY
+          $githubToken = $env:PERSONAL_TOKEN
+          
           $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("${browserstackUsername}:${browserstackAccessKey}"))
 
-          $githubToken = $env:{{ secrets.PERSONAL_TOKEN }}
-          
           $APP_UPLOAD_RESPONSE = Invoke-RestMethod -Uri "https://api-cloud.browserstack.com/app-automate/upload" -Method Post -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -Form @{file = $fileName_abs_path}
 
           $APP_ID = $APP_UPLOAD_RESPONSE.app_url
