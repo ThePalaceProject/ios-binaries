@@ -25,7 +25,7 @@ jobs:
       
       - name: Upload to browserstack and trigger tests
         run: |
-         COMMITS=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/ThePalaceProject/ios-binaries/commits)
+         COMMITS=$(curl -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/ThePalaceProject/ios-binaries/commits?per_page=50&page=1")
          URLS=$(echo $COMMITS | jq -r '.[] | select(.commit.author.name=="runner")' | jq -r '.url')
          URL=${URLS:0:107}
          echo URL: $URL
