@@ -9,6 +9,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+
+    # Check initial disk space
+      - name: Check disk space before operations
+        run: |
+          echo "Checking disk space before operations"
+          df -h
+          du -sh *
+
+      - name: Cleanup before operations
+        run: |
+          echo "Cleaning up any previous builds and artifacts"
+          rm -rf *.zip
+          rm -rf *.ipa
+          rm -rf *_diag
               
       - uses: actions/checkout@v4
         with:
@@ -23,6 +37,8 @@ jobs:
          RESPONSE=$(curl -H "Accept: application/vnd.github.v3+json" $URL)
          readarray -t build_name <<<"$(jq '.files[].filename'<<<$RESPONSE)"
          ZIP_NAME=${build_name:1:21}
+         echo "Downloading and unzipping $ZIP_NAME"
+         curl -O [ZIP URL] # Replace [ZIP URL] with the actual URL of the zip file.
          unzip $ZIP_NAME
          fileName=*.ipa
          echo file: $fileName
@@ -34,3 +50,17 @@ jobs:
          echo APP_ID: $APP_ID
          echo "Triggering autotests"
          curl -X POST -H "Accept:application/vnd.github.v3+json" https://api.github.com/repos/ThePalaceProject/mobile-integration-tests-new/actions/workflows/maven.yml/dispatches -d '{"ref":"main", "inputs":{"test_tag":"@smoke","build_name":"'"$BUILD_NAME"'","device_name_and_version":"iPhone14ProMax_16","bs_app_link":"'"$APP_ID"'","platform_name":"ios"}}' -H "Authorization: token ${{secrets.PERSONAL_TOKEN}}"
+
+        # Cleanup after operations
+      - name: Cleanup after operations
+        run: |
+          echo "Cleaning up builds and artifacts after operations"
+          rm -rf *.zip
+          rm -rf *.ipa
+
+      # Check disk space after cleanup
+      - name: Check disk space after cleanup
+        run: |
+          echo "Checking disk space after cleanup"
+          df -h
+          du -sh *
