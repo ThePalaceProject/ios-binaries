@@ -1,21 +1,19 @@
 name: iPad Pro 2022 16 Lyrasis
 
 on:
-  schedule:
-    - cron: '30 5 * * 0'
+  push:
+    branches:
+      - master
   
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
       # Check initial disk space
       - name: Check disk space before operations
         run: |
           echo "Checking disk space before operations"
           df -h
-          du -sh *
 
       - name: Cleanup before operations
         run: |
@@ -23,6 +21,8 @@ jobs:
           rm -rf *.zip
           rm -rf *.ipa
           rm -rf *_diag
+    
+      - uses: actions/checkout@v4
 
       - name: Upload to browserstack and trigger tests
         run: |
@@ -59,4 +59,3 @@ jobs:
         run: |
           echo "Checking disk space after cleanup"
           df -h
-          du -sh *
