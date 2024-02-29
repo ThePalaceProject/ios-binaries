@@ -34,7 +34,6 @@ jobs:
           readarray -t build_name <<<"$(jq '.files[].filename'<<<$RESPONSE)"
           ZIP_NAME=${build_name:1:21}
           echo "Downloading and unzipping $ZIP_NAME"
-          curl -O [ZIP URL] # Replace [ZIP URL] with the actual URL of the zip file.
           unzip $ZIP_NAME
           fileName=*.ipa
           echo file: $fileName
