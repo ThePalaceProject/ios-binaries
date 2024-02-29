@@ -1,8 +1,9 @@
 name: iPad Pro 2022 16 Lyrasis
 
 on:
-  schedule:
-    - cron: '30 5 * * 0'
+  push:
+    branches:
+      - master
   
 jobs:
   build:
