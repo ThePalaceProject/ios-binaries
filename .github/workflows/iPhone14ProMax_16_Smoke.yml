@@ -27,8 +27,17 @@ jobs:
       - name: Upload to browserstack and trigger tests
         run: |
          COMMITS=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/ThePalaceProject/ios-binaries/commits)
+
+         echo "COMMITS: $COMMITS"
+         
          URLS=$(echo $COMMITS | jq -r '.[] | select(.commit.author.name=="runner")' | jq -r '.url')
+
+         echo "URLS: $URLS"
+         
          URL=${URLS:0:107}
+
+         echo "URL: $URL"
+         
          echo URL: $URL
          RESPONSE=$(curl -H "Accept: application/vnd.github.v3+json" $URL)
          readarray -t build_name <<<"$(jq '.files[].filename'<<<$RESPONSE)"
