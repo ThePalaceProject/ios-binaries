@@ -2,7 +2,7 @@ name: iPhone 15 Pro Max 17 Palace
 
 on:
   schedule:
-    - cron:  '30 20 * * 1'
+    - cron:  '00 3 * * 2'
   
 jobs:
   build:
