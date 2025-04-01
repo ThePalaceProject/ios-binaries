@@ -1,0 +1,57 @@
+name: iPhone 16 18.3 in Lyrasis
+
+on:
+  schedule:
+    - cron: '00 6 * * 0'
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: Check disk space before operations
+        run: |
+          echo "Checking disk space before operations"
+          df -h
+
+      - name: Cleanup before operations
+        run: |
+          echo "Cleaning up any previous builds and artifacts"
+          rm -rf *.zip
+          rm -rf *.ipa
+          rm -rf *_diag
+    
+      - uses: actions/checkout@v4
+
+      - name: Upload to browserstack and trigger tests
+        run: |
+          COMMITS=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/ThePalaceProject/ios-binaries/commits)
+          URLS=$(echo $COMMITS | jq -r '.[] | select(.commit.author.name=="runner")' | jq -r '.url')
+          URL=${URLS:0:107}
+          echo URL: $URL
+          RESPONSE=$(curl -H "Accept: application/vnd.github.v3+json" $URL)
+          readarray -t build_name <<<"$(jq '.files[].filename'<<<$RESPONSE)"
+          ZIP_NAME=${build_name:1:21}
+          echo "Downloading and unzipping $ZIP_NAME"
+          unzip $ZIP_NAME
+          fileName=*.ipa
+          echo file: $fileName
+          BUILD_NAME=$fileName
+          echo buildName: $BUILD_NAME
+          fileName_abs_path=$(realpath $fileName)
+          APP_UPLOAD_RESPONSE=$(curl -u "${{ secrets.BROWSERSTACK_USERNAME }}:${{ secrets.BROWSERSTACK_ACCESSKEY }}" -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@$fileName_abs_path")
+          APP_ID=$(echo $APP_UPLOAD_RESPONSE | jq -r ".app_url")
+          echo APP_ID: $APP_ID
+          echo "Triggering autotests"
+          curl -X POST -H "Accept:application/vnd.github.v3+json" https://api.github.com/repos/ThePalaceProject/mobile-integration-tests-new/actions/workflows/maven.yml/dispatches -d '{"ref":"main", "inputs":{"test_tag":"@tier1","build_name":"'"$BUILD_NAME"'","device_name_and_version":"iPhone16_18.3","bs_app_link":"'"$APP_ID"'","platform_name":"ios"}}' -H "Authorization: token ${{secrets.PERSONAL_TOKEN}}"
+
+      - name: Cleanup after operations
+        run: |
+          echo "Cleaning up builds and artifacts after operations"
+          rm -rf *.zip
+          rm -rf *.ipa
+
+      - name: Check disk space after cleanup
+        run: |
+          echo "Checking disk space after cleanup"
+          df -h
