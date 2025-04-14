@@ -26,8 +26,11 @@ jobs:
       - name: Upload to browserstack and trigger tests
         run: |
          COMMITS=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/ThePalaceProject/ios-binaries/commits)
-         URLS=$(echo $COMMITS | jq -r '.[] | select(.commit.author.name=="runner")' | jq -r '.url')
-         URL=${URLS:0:107}
+         URLS=$(echo $COMMITS | jq -r '.[] | select(.commit.author.name=="runner")' | jq -r '.url' | head -n 1)
+         if [ -z "$URL" ]; then
+          echo "No matching commit found. Exiting."
+          exit 1
+         fi
          echo URL: $URL
          RESPONSE=$(curl -H "Accept: application/vnd.github.v3+json" $URL)
          readarray -t build_name <<<"$(jq '.files[].filename'<<<$RESPONSE)"
